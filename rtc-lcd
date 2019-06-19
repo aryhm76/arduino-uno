@@ -1,0 +1,74 @@
+//Created by Adrian
+#include <LiquidCrystal.h>
+#include <DS3231.h>
+
+DS3231  rtc(SDA, SCL);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+int pinLed = 7;
+int pinBuzzer = 13;
+long temp;
+
+Time t;
+uint32_t targetTime=0;
+uint8_t hh=0, mm=0, ss=0, dd=0;
+int yy=0;
+String Day=" ";
+String Month=" ";
+
+void setup() {
+  // put your setup code here, to run once:
+  lcd.begin(16, 2);
+  rtc.begin();
+  rtc.setDOW(FRIDAY);
+  rtc.setTime(19, 34, 0);
+  rtc.setDate(11, 11, 2016);
+  pinMode(pinLed, OUTPUT);
+  pinMode(pinBuzzer, OUTPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  temp=rtc.getTemp();
+  t=rtc.getTime();
+  Day=rtc.getDOWStr(1);
+  dd=t.date,DEC;
+  Month=rtc.getMonthStr(1);
+  yy=t.year, DEC;
+  hh=t.hour,DEC;
+  mm=t.min,DEC; 
+  ss=t.sec,DEC;
+  
+  lcd.setCursor(0, 0);
+  lcd.print(Day);
+  lcd.print(" ");
+  lcd.print(dd);lcd.print(F(" "));  
+  lcd.print(Month);lcd.print(F(" "));
+  lcd.print(yy);
+
+  lcd.setCursor(0, 1);  
+  lcd.print("Tem ");
+  lcd.print(temp);
+  lcd.print("C ");
+  lcd.print(hh);lcd.print(F(":"));
+  lcd.print(mm);lcd.print(F(":"));
+  lcd.print(ss);
+  
+  delay (1000);
+
+  /*if(hh==19 && mm==28 && ss>=03){
+    digitalWrite(pinLed, HIGH);
+    digitalWrite(pinBuzzer, HIGH);
+    delay(500);
+    digitalWrite(pinLed, LOW);
+    digitalWrite(pinBuzzer, LOW);
+    delay(500);
+    }
+
+  if(hh==19 && mm==28 && ss>=10){
+    digitalWrite(pinLed, LOW);
+    digitalWrite(pinBuzzer, LOW);
+    }*/
+
+}
