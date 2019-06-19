@@ -1,0 +1,53 @@
+//Created by Adrian
+int btnPin = 2;
+int ledPin = 13;
+int buzzer = 4;
+int trigPin = 11;
+int echoPin = 12;
+long duration, cm;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //berikan pulsa LOW utk memastikan pulsa HIGH bersih
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Baca sinyal dari sensor: pulsa HIGH yang
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
+  // convert jarak kedalam cm dan meter
+  cm = (duration/2) / 29.1;
+  
+  if(cm<30){
+    Serial.print("Jarak : ");
+    Serial.print(cm);
+    Serial.print(" cm");
+    Serial.println();
+   
+    digitalWrite(ledPin, HIGH);
+    digitalWrite(buzzer, HIGH);
+    delay(100);
+    digitalWrite(ledPin, LOW);
+    digitalWrite(buzzer, LOW);
+    delay(100);
+    }
+
+    else{
+      digitalWrite(ledPin, LOW);
+      digitalWrite(buzzer, LOW);
+      Serial.println("Jarak > 10 cm");
+      delay(1000);
+      }
+  
+}
