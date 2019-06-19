@@ -1,0 +1,48 @@
+int pinSuhu = A0;
+float suhu, data;
+int pinLed = 4;
+int pinBuzzer = 2;
+int pinLedHijau = 7;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(pinSuhu, INPUT);
+  pinMode(pinLed, OUTPUT);
+  pinMode(pinBuzzer, OUTPUT);
+  pinMode(pinLedHijau, OUTPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  data = analogRead(pinSuhu);
+  suhu = data*500/1024;
+
+  Serial.print("Data : ");
+  Serial.print(data);
+  Serial.print(", Suhu : ");
+  Serial.print(suhu);
+  Serial.println();
+
+  if(suhu>400){
+    digitalWrite(pinLed, HIGH);
+    digitalWrite(pinBuzzer, HIGH);
+    digitalWrite(pinLedHijau, LOW);
+    }
+    else{
+      digitalWrite(pinLed, LOW);
+      digitalWrite(pinBuzzer, LOW);
+      suhuNormal();
+      }
+  
+  delay(1000);
+}
+
+void suhuNormal(){
+  digitalWrite(pinLedHijau, HIGH);
+  delay(300);
+  digitalWrite(pinLedHijau, LOW);
+  delay(300);
+  }
+
