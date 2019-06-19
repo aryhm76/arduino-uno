@@ -1,0 +1,31 @@
+//Created by Adrian
+int btnPin = 2;
+int ledPin = 13;
+int btnState = 0;
+int buzzer = 4;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(ledPin, OUTPUT);
+  pinMode(btnPin, INPUT);  
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  btnState = digitalRead(btnPin);
+
+   if(btnState==HIGH){
+    digitalWrite(ledPin, LOW);
+    digitalWrite(buzzer, LOW);
+    }
+
+    else{
+      digitalWrite(ledPin, HIGH);
+      digitalWrite(buzzer, HIGH);
+      delay(500);
+      digitalWrite(ledPin, LOW);
+      digitalWrite(buzzer, LOW);
+      delay(500);
+      }
+}
